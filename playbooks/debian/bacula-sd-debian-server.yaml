@@ -1,0 +1,14 @@
+- name: bacula-sd-debian
+  hosts: bacula-sd-debians
+  gather_facts: False
+  become: true
+  vars_files:
+    - passwords.yaml
+  roles:
+    - role: "roles/bacula-sd-pkgs"
+  tasks:
+    - name: apply template bacula-sd
+      ignore_errors: True
+      template:
+        src: config/bacula-sd.conf.j2
+        dest: /etc/bacula/bacula-sd.conf

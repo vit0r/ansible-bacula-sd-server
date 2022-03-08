@@ -1,0 +1,55 @@
+#
+# Default Bacula Storage Daemon Configuration file
+#
+#  For Bacula release 9.6.7 (10 December 2020) -- debian bullseye/sid
+#
+# You may need to change the name of your tape drive
+#   on the "Archive Device" directive in the Device
+#   resource.  If you change the Name and/or the
+#   "Media Type" in the Device resource, please ensure
+#   that dird.conf has corresponding changes.
+#
+#
+# Copyright (C) 2000-2020 Kern Sibbald
+# License: BSD 2-Clause; see file LICENSE-FOSS
+#
+
+Storage {                           
+  Name = bullseye-sd
+  SDPort = 9103                  
+  WorkingDirectory = "/var/lib/bacula"
+  Pid Directory = "/run/bacula"
+  Plugin Directory = "/usr/lib/bacula"
+  Maximum Concurrent Jobs = 5
+  SDAddress = 127.0.0.1
+}
+
+Director {
+  Name = bullseye-dir
+  Password = "{{ directorpassword }}"
+}
+
+Director {
+  Name = bullseye-mon
+  Password = "{{ directormonpassword }}"
+  Monitor = yes
+}
+
+Autochanger {
+  Name = ACbackupMNT
+  Device = ACbackupMNT-Dev
+  Changer Command = ""
+  Changer Device = /dev/null
+}
+
+Device {
+  Name = ACbackupMNT-Dev
+  Media Type = Discos2
+  Archive Device = {{ archivedevice }}
+  LabelMedia = yes;
+  Random Access = Yes;
+  AutomaticMount = yes;
+  RemovableMedia = no;
+  AlwaysOpen = no;
+  Maximum Concurrent Jobs = 5
+}

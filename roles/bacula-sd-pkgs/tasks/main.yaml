@@ -1,0 +1,9 @@
+---
+- name: install bacula-sd
+  apt:
+    force_apt_get: yes
+    state: latest
+    name: "{{ item }}"
+  loop:
+    - bacula-common-pgsql
+    - bacula-sd
